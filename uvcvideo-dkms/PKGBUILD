@@ -1,0 +1,36 @@
+# Maintainer: Felix Yan <felixonmars@archlinux.org>
+# Contributor: maz-1 <loveayawaka@gmail.com>
+
+_pkgname=uvcvideo
+pkgname=${_pkgname}-dkms
+pkgver=r104
+pkgrel=1
+pkgdesc="uvcvideo is a class of usb video driver.Use with DKMS"
+arch=('any')
+url="http://mxhaard.free.fr/"
+license=('GPL')
+depends=('dkms')
+provides=('uvcvideo')
+conflicts=('uvcvideo')
+optdepends=('luvcview: Viewer for usb-uvc-cameras')
+install=install
+source=("git://github.com/maz-1/uvcvideo"
+        "dkms.conf")
+md5sums=('SKIP'
+	 'SKIP')
+
+build() {
+	cd "$srcdir/${_pkgname}"
+	rm -rf ./.git
+	rm -rf ./.svn
+}
+
+package() {
+	cd "$srcdir/${_pkgname}"
+	make clean
+	mkdir -p ${pkgdir}/usr/src
+	cp -RL $srcdir/${_pkgname}  ${pkgdir}/usr/src/${_pkgname}-${pkgver}
+	cp $srcdir/dkms.conf ${pkgdir}/usr/src/${_pkgname}-${pkgver}
+	
+	
+}

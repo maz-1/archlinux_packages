@@ -1,0 +1,82 @@
+# Maintainer: Thiago Kenji Okada <thiago DOT mast3r AT gmail DOT com>
+# Contributor: uberushaximus <uberushaximus AT gmail DOT com>
+
+pkgname=ppsspp-qt-git
+pkgver=v0.9.9.r68.g404766c
+pkgrel=1
+# You can change this variable to any valid git object (e.g. stable versions)
+_git_branch=master
+pkgdesc="A PSP emulator for Android, Windows, Mac, and Linux, written in C++ \
+    with Qt UI."
+arch=('i686' 'x86_64')
+url="http://www.ppsspp.org/"
+license=('GPL')
+#SDL is not a hard dependency if you don't need joystick support
+depends=('qt5-base' 'qt5-multimedia' 'sdl')
+makedepends=('qt5-tools' 'git' 'gcc')
+optdepends=()
+provides=('ppsspp-qt')
+install='ppsspp.install'
+#We only clone what we need to build instead of everything
+source=("ppsspp::git://github.com/hrydgard/ppsspp.git#branch=$_git_branch"
+        "ppsspp-lang::git://github.com/hrydgard/ppsspp-lang"
+        "ppsspp-ffmpeg::git://github.com/hrydgard/ppsspp-ffmpeg.git"
+        "native::git://github.com/hrydgard/native"
+		"armips::git://github.com/Kingcom/armips.git")
+md5sums=('SKIP'
+         'SKIP'
+         'SKIP'
+         'SKIP'
+		 'SKIP')
+
+pkgver() {
+    cd "$srcdir/ppsspp"
+    git describe --always | sed -E 's/([^-]*-g)/r\1/;s/-/./g'
+}
+
+prepare() {
+    cd $srcdir/ppsspp
+
+    #Since PPSSPP use submodules, clone each submodule and change it's url
+    #to our internal copy so we don't need to clone submodules on each build
+    #WARNING: this method generates 3 copies of submodules instead of 1
+    git config submodule.ffmpeg.url $srcdir/ppsspp-ffmpeg
+    git submodule update ffmpeg
+
+    git config submodule.lang.url $srcdir/ppsspp-lang
+    git submodule update lang
+
+    git config submodule.native.url $srcdir/native
+    git submodule update native
+	
+	git config submodule.armips.url $srcdir/ext/armips
+    git submodule update native
+}
+
+build() {
+    cd $srcdir/ppsspp
+
+    mkdir build-qt
+    cd build-qt
+    qmake ../Qt/PPSSPPQt.pro
+    make
+}
+
+package() {
+    install -Dm755 $srcdir/ppsspp/build-qt/ppsspp \
+        $pkgdir/usr/bin/ppsspp
+    install -Dm644 $srcdir/ppsspp/debian/ppsspp.desktop \
+        $pkgdir/usr/share/applications/ppsspp.desktop
+    install -Dm644 $srcdir/ppsspp/debian/ppsspp.1 \
+        $pkgdir/usr/share/man/man1/ppsspp.1
+
+    #install -Dm644 icon.svg "$pkgdir/usr/share/icons/ppsspp.svg"
+    cd $srcdir/ppsspp/assets
+    find . -type f -not -path './unix-icons/*' -exec \
+        install -Dm644 {} "$pkgdir/usr/share/ppsspp/assets/"{} \;
+    cd unix-icons
+    find . -type f -name "*.png" -exec \
+        install -Dm644 {} "$pkgdir/usr/share/icons/"{} \;
+}
+
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
