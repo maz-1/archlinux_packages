@@ -2,7 +2,7 @@
 # Contributor: uberushaximus <uberushaximus AT gmail DOT com>
 
 pkgname=ppsspp-qt-git
-pkgver=v0.9.9.r68.g404766c
+pkgver=v0.9.9.1.r1505.gcf577e9
 pkgrel=1
 # You can change this variable to any valid git object (e.g. stable versions)
 _git_branch=master
@@ -49,8 +49,11 @@ prepare() {
     git config submodule.native.url $srcdir/native
     git submodule update native
 	
-	git config submodule.armips.url $srcdir/ext/armips
-    git submodule update native
+	cd $srcdir/ppsspp/ext
+	#git config submodule.armips.url $srcdir/armips
+    #git submodule update armips
+	rm -rf armips
+	ln -s $srcdir/armips ./armips
 }
 
 build() {
