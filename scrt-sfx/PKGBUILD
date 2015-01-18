@@ -20,11 +20,11 @@ source=("http://storage.live.com/items/EED7455B8FCA288F%211029?a.tar.gz"   #"${p
 		)
 		
 md5sums=('9905af66853cf42c4718775055cdd4b5'
-		'SKIP'
-		'SKIP'
-		'SKIP'
-		'SKIP'
-		'SKIP'
+		'bdb6d19ca9c143fa742ebd9ed609bcab'
+		'c1683a1fdd24b8346fa17cf73cfa8713'
+		'51bfcefeecfdeec450f0221be43eb1fe'
+		'3bc3dcaa3a872fa89a9c939dd7e37e5d'
+		'c776b8c8b23e4743fb17fc2f9f362342'
 		)
 
 package() {
