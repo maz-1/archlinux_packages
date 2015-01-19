@@ -1,0 +1,41 @@
+pkgname=ttf-fonts-mono-extra
+pkgver=7.1
+pkgrel=8
+pkgdesc="ttf-fonts-mono-extra"
+arch=('any')
+url="http://www.microsoft.com"
+license=('custom')
+depends=('fontconfig' 'xorg-mkfontscale' 'xorg-mkfontdir')
+install=$pkgname.install
+
+source=('Envy_Code_R.ttf' 'Envy_Code_R_Bold.ttf' 'Envy_Code_R_Italic.ttf' 'FantasqueSansMono-BoldItalic.ttf' 'FSEX300.ttf' 'PTM55FT.ttf' 'MONACO.ttf')
+sha256sums=('SKIP'
+	    'SKIP'
+	    'SKIP'
+	    'SKIP'
+	    'SKIP'
+	    'SKIP'
+	    'SKIP')
+	    
+build() {
+  cd "${srcdir}"
+
+  # cambria.ttc is a TrueType Collection (TTC) which causes problems with
+  # LibreOffice (Cambria Reguar cannot be selected) so we need to convert
+  # the TTC into a TrueType Font (TTF).
+ # FONTFORGE_LANGUAGE=ff fontforge -c 'Open("cambria.ttc(Cambria)"); Generate("cambria.ttf")'
+}
+
+package() {
+  cd "${srcdir}"
+
+  # Prepare destination directory
+  install -d -m 755 "${pkgdir}/usr/share/fonts/TTF"
+
+  # Install fonts and license
+  install -m 644 *.ttf "${pkgdir}/usr/share/fonts/TTF"
+ # install -D -m 644 "license.rtf" "${pkgdir}/usr/share/licenses/${pkgname}/license.rtf"
+}
+
+# vim: set ts=2 sw=2 ft=sh noet:
+
