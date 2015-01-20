@@ -8,12 +8,15 @@ license=('custom')
 depends=('fontconfig' 'xorg-mkfontscale' 'xorg-mkfontdir')
 install=$pkgname.install
 
-source=('Envy_Code_R.ttf' 'Envy_Code_R_Bold.ttf' 'Envy_Code_R_Italic.ttf' 'FantasqueSansMono-BoldItalic.ttf' 'FSEX300.ttf' 'PTM55FT.ttf' 'MONACO.ttf')
+source=('Envy_Code_R.ttf' 'Envy_Code_R_Bold.ttf' 'Envy_Code_R_Italic.ttf' 'FantasqueSansMono-BoldItalic.ttf' 'FSEX300.ttf' 'PTM55FT.ttf' 'MONACO.ttf' 'fontello.ttf' 'lmsans10-bold-webfont.ttf' 'lmsans10-regular-webfont.ttf')
 sha256sums=('SKIP'
 	    'SKIP'
 	    'SKIP'
 	    'SKIP'
 	    'SKIP'
+	    'SKIP'
+	    'SKIP'
+		'SKIP'
 	    'SKIP'
 	    'SKIP')
 	    
