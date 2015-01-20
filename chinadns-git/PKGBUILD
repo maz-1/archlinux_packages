@@ -10,14 +10,14 @@ url="https://github.com/clowwindy/ChinaDNS"
 license=('MIT')
 depends=('glibc')
 makedepends=('git')
-provides=('chinadns')
-conflicts=('chinadns')
+provides=('chinadns' 'chinadns-c')
+conflicts=('chinadns' 'chinadns-c')
 source=('git+https://github.com/clowwindy/ChinaDNS.git'
-		'conf.d.file'
+		'config.cfg'
         'chinadns.service')
-sha1sums=('SKIP'
-			'SKIP'
-          'SKIP')
+md5sums=('SKIP'
+		 '1a2806b5861e239107246c47fa00ecca'
+         '5269abd347c5ad3de55bbfc376c6657c')
 pkgver() {
   cd "$srcdir"/$_gitname
   git describe --long --tags | sed -r 's/([^-]*-g)/r\1/;s/-/./g'
@@ -40,7 +40,7 @@ package() {
   install -Dm 644 ${srcdir}/$_gitname/chnroute.txt "$pkgdir/etc/chinadns/chnroute.txt"
   install -Dm 644 ${srcdir}/$_gitname/iplist.txt "$pkgdir/etc/chinadns/iplist.txt"
   rm "$pkgdir/usr/share/chnroute.txt" "$pkgdir/usr/share/iplist.txt"
-  install -Dm 644 "$srcdir"/conf.d.file "$pkgdir"/etc/chinadns/config.cfg
+  install -Dm 644 "$srcdir"/config.cfg "$pkgdir"/etc/chinadns/config.cfg
   install -Dm 644 ${srcdir}/chinadns.service ${pkgdir}/usr/lib/systemd/system/chinadns.service
 }
  
