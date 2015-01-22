@@ -1,0 +1,13 @@
+--- vineyard-0.1.4.1.4/vineyard-preferences	2015-01-22 16:21:19.000000000 +0800
++++ vineyard-0.1.4.1.4-new/vineyard-preferences	2015-01-22 16:47:26.653682967 +0800
+@@ -170,7 +170,9 @@
+         self.widgets['treeview-pages'].append_column(column)
+ 
+         #self.widgets['notebook'].set_show_tabs(False)
+-        icon_theme = gtk.icon_theme_get_default()
++        #icon_theme = gtk.icon_theme_get_default()
++        icon_theme = gtk.IconTheme()
++        icon_theme.set_custom_theme('gnome')
+         liststore = gtk.ListStore(gtk.gdk.Pixbuf, str)
+         height = gtk.icon_size_lookup(gtk.ICON_SIZE_BUTTON)[1]
+         for page in [(_("General"), 'computer'), (_("Folders"), 'folder'), (_("Drives"), 'harddrive'), (_("Graphics"), 'applications-graphics'), (_("Sound"), 'audio-volume-high'), (_("Libraries"), 'document-properties'), (_("Tools"), 'applications-accessories')]:
