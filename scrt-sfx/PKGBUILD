@@ -11,7 +11,7 @@ depends=('openssl' 'glibc'
 		'libtiff' 'libpng' 'dbus' 'fontconfig' 'libgl' 'libxrandr' 'libxv' 'libxi' 'alsa-lib' 'libmng'
 		)
 
-source=("http://storage.live.com/items/EED7455B8FCA288F%211029?a.tar.gz"   #"${pkgname}-${pkgver}.${pkgrel}.ubuntu13-64.tar.gz"
+source=("${pkgname}-${pkgver}.${pkgrel}.ubuntu13-64.tar.gz::http://storage.live.com/items/EED7455B8FCA288F%211029?a.tar.gz"
 		"crack-binary.sh"
 		"SecureCRT.lic"
 		"SecureFX.lic"
