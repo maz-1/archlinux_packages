@@ -1,7 +1,7 @@
 pkgname=scrt-sfx
 pkgver=7.3.1
 pkgrel=685
-pkgdesc="Bundle of two SSH Clients : SecureCRT and SecureFX"
+pkgdesc="Bundle of two Remote Clients : SecureCRT and SecureFX"
 arch=('x86_64')
 url="http://www.vandyke.com/products/securecrt/"
 license=('custom')
