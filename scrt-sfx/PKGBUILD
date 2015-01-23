@@ -1,3 +1,6 @@
+# Maintainer : maz-1 <loveayawaka at gmail dot com>
+# https://github.com/maz-1/archlinux_packages/tree/master/scrt-sfx
+
 pkgname=scrt-sfx
 pkgver=7.3.1
 pkgrel=685
