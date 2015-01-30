@@ -1,0 +1,33 @@
+build ()
+{
+
+COMMAND='
+	while [ "`ps -ef | grep -P "\d\d:\d\d:\d\d pacman"`" != "" ]
+	do
+	sleep 4
+	done
+	#dkms autoinstall -k ${KERNELVERSION}
+	
+	if [ ! -d "/usr/lib/modules/${KERNELVERSION}/build" ]; then
+    echo -e "\e[1m\e[33mYou need to install or update ${KERNELVERSION} headers before build kernel image.\e[0m"
+    exit 1
+    fi
+    echo "Building dkms modules for ${KERNELVERSION} kernel..."
+    dkms autoinstall -k ${KERNELVERSION}
+    echo "Build complete."
+	'
+
+if [ "`ps -ef | grep -P "\d\d:\d\d:\d\d pacman"`" != "" ] ; then
+eval "$COMMAND" &
+else
+eval "$COMMAND"
+fi
+
+}
+
+help ()
+{
+cat<<HELPEOF
+    This hook rebuilds all dkms modules for new kernel.
+HELPEOF
+} 
