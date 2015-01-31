@@ -21,7 +21,7 @@ else
     if [ "$2" == "update" ]; then
         dkms autoinstall -k $1 1> /tmp/dkms.log 2>&1
     else
-        dkms autoinstall -k $1
+        dkms autoinstall -k $1 | tee /tmp/dkms.log
     fi    
     echo "Build complete."
     #rm /tmp/dkms.status
