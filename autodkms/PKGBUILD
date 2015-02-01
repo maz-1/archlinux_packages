@@ -9,13 +9,12 @@ arch=('any')
 license=('MIT')
 depends=('dkms')
 install=autodkms.install
-source=("autodkms" "hook.sh")
-sha256sums=("SKIP" "SKIP")
+source=("autodkms")
+sha256sums=("SKIP")
 
 package() {
   cd "${srcdir}"
   install -dm 755 "${pkgdir}"/usr/lib/initcpio/install
   install -dm 755 "${pkgdir}"/usr/share/autodkms
   install -m 644 autodkms "${pkgdir}"/usr/lib/initcpio/install/autodkms
-  install -m 755 hook.sh "${pkgdir}"/usr/share/autodkms/hook.sh
 }
