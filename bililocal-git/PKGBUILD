@@ -1,0 +1,43 @@
+# Maintainer: maz-1 <loveayawaka@gmail.com>
+
+_pkgname=bililocal
+pkgname=$_pkgname-git
+pkgver=1.595c40c
+pkgrel=1
+pkgdesc="Video player that can display barrage-like comments grabbed from danmaku websites like bilibili.com,acfun.tv and niconico.jp. "
+arch=('x86_64' 'i686')
+url="http://github.com/AncientLysine/BiliLocal"
+license=('GPL')
+depends=('qt5-base' 'vlc')
+makedepends=('git' 'qt5-tools')
+provides=($_pkgname)
+conflicts=($_pkgname)
+source=("git://github.com/AncientLysine/$_pkgname.git"
+        "bililocal.png"
+         "bililocal.desktop")
+md5sums=('SKIP' 
+           '2c522f6d2be80d079a11a7bea6d6aa1a'
+           '307f1c7f2db51fcf3e627eff866d6a16')
+_gitname=$_pkgname
+
+pkgver() {
+	cd "$srcdir/$_gitname"
+	echo "$(git rev-list --count HEAD).$(git describe --always)"
+}
+prepare() {
+     rm -rf ${srcdir}/build
+     mkdir ${srcdir}/build
+}
+build() {
+	cd "$srcdir/build"
+	qmake-qt5 ../${_gitname}/BiliLocal.pro
+        make
+}
+
+package() {
+	cd "$srcdir/build"
+	install -d 755 ${pkgdir}/usr/{bin,share/applications,share/bililocal}
+        install -Dm 755 BiliLocal ${pkgdir}/usr/bin/bililocal
+        install -m 644 ${srcdir}/bililocal.desktop ${pkgdir}/usr/share/applications
+        install -m 644 ${srcdir}/bililocal.png ${pkgdir}/usr/share/bililocal
+}
