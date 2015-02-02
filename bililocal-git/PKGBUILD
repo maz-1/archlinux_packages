@@ -16,8 +16,8 @@ source=("git://github.com/AncientLysine/$_pkgname.git"
         "bililocal.png"
          "bililocal.desktop")
 md5sums=('SKIP' 
-           '2c522f6d2be80d079a11a7bea6d6aa1a'
-           '307f1c7f2db51fcf3e627eff866d6a16')
+		'2c522f6d2be80d079a11a7bea6d6aa1a'
+ 		'ebf12b31da0d1cb2003385de302db0be')
 _gitname=$_pkgname
 
 pkgver() {
@@ -29,15 +29,24 @@ prepare() {
      mkdir ${srcdir}/build
 }
 build() {
-	cd "$srcdir/build"
-	qmake-qt5 ../${_gitname}/BiliLocal.pro
-        make
+		cd "$srcdir/build"
+		qmake-qt5 ../${_gitname}/BiliLocal.pro
+		make
+		cp ${srcdir}/bililocal/res/*.ts ./
+		lrelease-qt5 *.ts        
 }
 
 package() {
-	cd "$srcdir/build"
-	install -d 755 ${pkgdir}/usr/{bin,share/applications,share/bililocal}
-        install -Dm 755 BiliLocal ${pkgdir}/usr/bin/bililocal
-        install -m 644 ${srcdir}/bililocal.desktop ${pkgdir}/usr/share/applications
-        install -m 644 ${srcdir}/bililocal.png ${pkgdir}/usr/share/bililocal
+		cd "$srcdir/build"
+		install -dm 755 ${pkgdir}/usr/{bin,share/applications,share/bililocal}
+		install -Dm 755 BiliLocal ${pkgdir}/usr/share/bililocal/bililocal
+		install -m 644 ${srcdir}/bililocal.desktop ${pkgdir}/usr/share/applications
+		install -m 644 ${srcdir}/bililocal.png ${pkgdir}/usr/share/bililocal
+        echo '#!/bin/sh' >> ${pkgdir}/usr/bin/bililocal
+		echo 'exec /usr/share/bililocal/bililocal "$@"' >> ${pkgdir}/usr/bin/bililocal
+		chmod +x ${pkgdir}/usr/bin/bililocal
+        ls | grep -oP '[_a-zA-Z0-9]+(?=\.qm)' | while read locale 
+        do 
+			install -Dm 644 ${locale}.qm ${pkgdir}/usr/share/bililocal/locale/${locale}/bililocal.qm
+		done
 }
