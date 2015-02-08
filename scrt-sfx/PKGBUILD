@@ -9,9 +9,7 @@ arch=('x86_64' 'i686')
 url="http://www.vandyke.com/products/securecrt/"
 license=('custom')
 
-depends=('openssl' 'glibc'  # 'qt4'
-		'libtiff' 'libpng' 'dbus' 'fontconfig' 'libgl' 'libxrandr' 'libxv' 'libxi' 'alsa-lib' 'libmng'
-		)
+depends=('openssl' 'glibc' 'qt4')
 source=("crack-binary.sh"
 		"SecureCRT.lic"
 		"SecureFX.lic"
