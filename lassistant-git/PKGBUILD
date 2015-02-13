@@ -1,31 +1,38 @@
-# Maintainer: maz-1 <loveayawaka at gmail dot com>
+# Maintainer: maz-1 <loveayawaka@gmail.com>
 
-pkgname=lassistant
-pkgver=1.1
+_pkgname=lassistant
+pkgname=$_pkgname-git
+pkgver=1.9c0b750
 pkgrel=1
 pkgdesc="Qt5 GUI for Android SDK/ADB, Android phone manager."
 arch=('x86_64' 'i686')
 url="http://github.com/xsjqqq123/lassistant"
 license=('LGPL2')
 depends=('android-tools' 'qt5-base' 'axel')
-makedepends=('qt5-tools')
-source=("LAssistant-${pkgver}.zip::https://codeload.github.com/xsjqqq123/LAssistant/zip/${pkgver}"
+makedepends=('git' 'qt5-tools')
+provides=($_pkgname)
+conflicts=($_pkgname)
+source=("git://github.com/xsjqqq123/$_pkgname.git"
 		"lassistant.desktop"
 		"lassistant.png"
 		)
-md5sums=('2a4bc8cfacb0025a3fe56241fb2e6438'
+md5sums=('SKIP'
 			'7c7e4ec076dc93930da02ad0581d8112'
 			'fb34fca0ef37f87644b7fe3d7acc4044'
 			)
+_gitname=$_pkgname
 
-
+pkgver() {
+	cd "$srcdir/$_gitname"
+	echo "$(git rev-list --count HEAD).$(git describe --always)"
+}
 prepare() {
         rm -rf ${srcdir}/build
         mkdir ${srcdir}/build
 }
 build() {
 	cd "${srcdir}/build"
-	qmake-qt5 ../LAssistant-${pkgver}/LAssistant.pro
+	qmake-qt5 ../${_gitname}/LAssistant.pro
 	make
 }
 
