@@ -1,7 +1,7 @@
 # Maintainer: maz-1 <loveayawaka at gmail dot com>
 
 pkgname=gimp-painter-git
-pkgver=20150126.b5b143f
+pkgver=20151004.g87851f6
 pkgrel=1
 pkgdesc="Fork of GIMP aiming to add drawing and painting features to GIMP. Git version"
 arch=('i686' 'x86_64')
@@ -30,34 +30,13 @@ replaces=()
 backup=()
 install='gimp-painter.install'
 source=(git://github.com/seagetch/gimp-painter.git
-		linux.gpl)
+		linux.gpl
+		look_for_automake_1.15.patch
+		use_gegl_3.patch)
 md5sums=('SKIP'
-         'bb27bc214261d36484093e857f015f38')
-
-# Set to 1 to auto-rebase gimp-painter-git onto official gimp repository
-# Set to 0 if you just want to use the raw gimp-painter-git, which doesn't
-# get rebased all that often.
-# Attention : branch is set to gimp-2-8 by default.
-# If you enabled auto-rebase and set branch to master,you must have gegl-git and babl-git .
-_rebase=0
-_branch=gimp-2-8
-
-if [ $_rebase -eq 1 ]; then
-    source[${#source[@]}]='git://github.com/GNOME/gimp.git'
-    md5sums[${#md5sums[@]}]='SKIP'
-	
-	if [ $_branch = "master" ]; then
-		depends[${#depends[@]}]='gegl-git'
-		provides=('gimp=2.9')
-	else
-		provides=('gimp=2.8')
-		depends[${#depends[@]}]='gegl'
-	fi
-	
-else
-	provides=('gimp=2.8')
-	depends[${#depends[@]}]='gegl'
-fi
+         'bb27bc214261d36484093e857f015f38'
+         'f900314ce2dbdc9ea5e78ce7b656c0f6'
+         'fe939863cf9a4dc4fe76076a8e4a9645')
 
 noextract=()
 
@@ -68,44 +47,15 @@ pkgver() {
 	GITREV=$(git describe --always|awk -F"-" '{print $NF}')
 	echo `date +%Y%m%d`.${GITREV}
 }
+prepare() {
+    cd "$srcdir/$_gitname"
+    patch -p1 < ../look_for_automake_1.15.patch
+    patch -p1 < ../use_gegl_3.patch
+}
 
 build() {
-#	if [ "$_rebase" -eq 1 ]; then
-#		cd "$srcdir/gimp"
-#		git checkout $_branch
-#	fi
-	
   cd "$srcdir/$_gitname"
-
-  # Try to rebase onto upstream, skipping patches that fail
-  if [ "$_rebase" -eq 1 ]; then
-      local failed=0
-      local needreconf
-      msg2 "Attempting to auto-rebase onto latest upstream. Set _rebase to 0 to disable this."
-      git remote add upstream "$srcdir"/gimp || true
-      git fetch upstream
-      local ret=0
-      # Set a  throwaway name (local to just this build repo)
-      git config user.email "gimp-painter-git@rebasing.patches.localhost"
-      git config user.name "gimp-painter-git auto-rebase"
-      git rebase upstream/$_branch || ret=1
-      while [ $ret -ne 0 ]; do
-        ret=0
-        warning "SKIPPING patch that no longer applies: $(cat .git/rebase-apply/msg-clean)"
-        ret=0
-        (( ++failed ))
-        git rebase --skip || ret=1
-      done
-      [ "$failed" -eq 0 ] || warning "$failed gimp-painter patches failed to rebase on upstream and were dropped"
-  fi
-
-
-
-
-
-#  sed -i -e 's/automake-1.11/automake-1.14/g' \
-#    -e 's/aclocal-1.11/aclocal-1.14/g' autogen.sh
-
+  gtkdocize
   PYTHON=/usr/bin/python2 ./autogen.sh --prefix=/usr --sysconfdir=/etc \
     --enable-mp --enable-gimp-console --enable-gimp-remote \
     --enable-python --with-gif-compression=lzw --with-libcurl \
@@ -118,6 +68,8 @@ package() {
   make DESTDIR="$pkgdir/" install
   sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python2|' "${pkgdir}"/usr/lib/gimp/2.0/plug-ins/*.py
   install -D -m644 "${srcdir}/linux.gpl" "${pkgdir}/usr/share/gimp/2.0/palettes/Linux.gpl"
+  install -D -m644 "$srcdir/$_gitname/libgimp/gimpmypaintbrushselect_pdb.h" \
+    "${pkgdir}/usr/include/gimp-2.0/libgimp/gimpmypaintbrushselect_pdb.h"
 	
 	GIMPBIN=` ls ${pkgdir}/usr/bin | grep -e 'gimp-2' `
 	GIMPCLIBIN=` ls ${pkgdir}/usr/bin | grep -e 'gimp-console-2' `
