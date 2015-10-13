@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Hello Minecraft Launcher
+Comment=Minecraft Launcher
+Exec=hmcl
+Icon=minecraft.png
+Type=Application
+Categories=Game;
+Terminal=false
