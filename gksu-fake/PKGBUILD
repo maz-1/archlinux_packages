@@ -1,0 +1,20 @@
+pkgname=gksu-fake
+pkgver=1.0
+pkgrel=1
+pkgdesc="fake gksu"
+arch=('any')
+url="http://www.archlinux.org"
+license=('GPL')
+depends=('kdesu')
+provides=('gksu')
+conflicts=('gksu')
+
+
+
+package() {
+  install -dm 755 "${pkgdir}/usr/bin/"
+  echo '#!/bin/sh' > "${pkgdir}/usr/bin/gksu"
+  echo 'exec kdesu "$@"' >> "${pkgdir}/usr/bin/gksu"
+  chmod +x "${pkgdir}/usr/bin/gksu"
+}
+
