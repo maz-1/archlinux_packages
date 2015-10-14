@@ -47,6 +47,6 @@ package() {
   echo '#!/bin/sh' > "${pkgdir}/usr/bin/xembedsniproxy"
   echo '[ "z${1}" = "zdelay" ] && sleep ${2}' >> "${pkgdir}/usr/bin/xembedsniproxy"
   echo 'killall -9 xembedsniproxy.bin' >> "${pkgdir}/usr/bin/xembedsniproxy"
-  echo 'exec /usr/bin/xembedsniproxy.bin "`echo $@ | sed "s:delay\s+\d+::" `"' >> "${pkgdir}/usr/bin/xembedsniproxy"
+  echo 'exec /usr/bin/xembedsniproxy.bin "`echo $@ | sed "s/delay  *[0-9]*//g" `"' >> "${pkgdir}/usr/bin/xembedsniproxy"
   chmod +x "${pkgdir}/usr/bin/xembedsniproxy"
 }
