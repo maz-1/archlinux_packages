@@ -43,7 +43,7 @@ build() {
   make -j4
   make install
   
-  cd mkxp
+  cd "${srcdir}/mkxp"
 
   # get the major and minor version of installed ruby, remove any strings (like beta, patchlevel)
   _rubyver=$(pacman -Q ruby | sed -r 's/^ruby //;s/\.[^\.]+-.+$//;s/[^0-9\.]//')
