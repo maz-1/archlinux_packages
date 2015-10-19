@@ -1,0 +1,42 @@
+diff -Naur a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2015-10-18 18:55:39.000000000 +0800
++++ b/CMakeLists.txt	2015-10-18 20:26:16.000000000 +0800
+@@ -70,7 +72,7 @@
+ 	endif()
+ 	if(APPLE)
+ 		set(PLATFORM_SHARED_LIBS 
+-			libSDL2.dylib libSDL2_image-2.0.0.dylib libSDL2_ttf-2.0.0.dylib libSDL_sound-1.0.1.dylib
++			libSDL2.dylib libSDL2_image-2.0.0.dylib libSDL2_ttf-2.0.0.dylib libSDL2_sound-1.0.1.dylib
+ 			libfreetype.6.dylib libsigc-2.0.0.dylib
+ 			CACHE STRING "List of shared libraries that need to be copied into the OS X bundle")
+ 		foreach(lib ${PLATFORM_SHARED_LIBS})
+@@ -90,7 +92,7 @@
+ pkg_check_modules(SDL2          REQUIRED sdl2)
+ pkg_check_modules(SDL2_TTF      REQUIRED SDL2_ttf)
+ pkg_check_modules(SDL2_IMAGE    REQUIRED SDL2_image)
+-pkg_check_modules(SDL_SOUND     REQUIRED SDL_sound)
++pkg_check_modules(SDL2_SOUND     REQUIRED SDL2_sound)
+ 
+ find_package(Boost 1.49 COMPONENTS program_options REQUIRED)
+ find_package(OpenAL REQUIRED)
+@@ -421,7 +423,7 @@
+ 	${SDL2_LIBRARIES}
+ 	${SDL2_IMAGE_LIBRARIES}
+ 	${SDL2_TTF_LIBRARIES}
+-	${SDL_SOUND_LIBRARIES}
++	${SDL2_SOUND_LIBRARIES}
+ 	${PHYSFS_LIBRARIES}
+ 	${PIXMAN_LIBRARIES}
+ 	${Boost_LIBRARIES}
+diff -Naur a/mkxp.pro b/mkxp.pro
+--- a/mkxp.pro	2015-10-18 20:21:19.000000000 +0800
++++ b/mkxp.pro	2015-10-18 20:24:17.173118381 +0800
+@@ -42,7 +42,7 @@
+ unix {
+ 	CONFIG += link_pkgconfig
+ 	PKGCONFIG += sigc++-2.0 pixman-1 zlib physfs vorbisfile \
+-	             sdl2 SDL2_image SDL2_ttf SDL_sound openal
++	             sdl2 SDL2_image SDL2_ttf SDL2_sound openal
+ 
+ 	SHARED_FLUID {
+ 		PKGCONFIG += fluidsynth
