@@ -1,0 +1,48 @@
+diff -Naur a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2015-10-19 09:37:29.000000000 +0800
++++ b/CMakeLists.txt	2015-10-19 09:39:50.948644470 +0800
+@@ -87,13 +87,15 @@
+ 
+ pkg_check_modules(SIGCXX        REQUIRED sigc++-2.0)
+ pkg_check_modules(PIXMAN        REQUIRED pixman-1)
+-pkg_check_modules(PHYSFS        REQUIRED physfs>=2.1)
+ pkg_check_modules(VORBISFILE    REQUIRED vorbisfile)
+ pkg_check_modules(SDL2          REQUIRED sdl2)
+ pkg_check_modules(SDL2_TTF      REQUIRED SDL2_ttf)
+ pkg_check_modules(SDL2_IMAGE    REQUIRED SDL2_image)
+ pkg_check_modules(SDL2_SOUND     REQUIRED SDL2_sound)
+ 
++ADD_LIBRARY(physfs_static STATIC IMPORTED)
++SET_TARGET_PROPERTIES(physfs_static PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../fakeroot/lib/libphysfs.a)
++
+ find_package(Boost 1.49 COMPONENTS program_options REQUIRED)
+ find_package(OpenAL REQUIRED)
+ find_package(ZLIB REQUIRED)
+@@ -388,7 +390,6 @@
+ link_directories(
+ 	${SIGCXX_LIBRARY_DIRS}
+ 	${PIXMAN_LIBRARY_DIRS}
+-	${PHYSFS_LIBRARY_DIRS}
+ 	${SDL2_LIBRARY_DIRS} # Blindly assume other SDL bits are in same directory
+ 	${Boost_LIBRARY_DIR}
+ 	${MRI_LIBDIR}
+@@ -407,9 +408,9 @@
+ )
+ target_include_directories(${PROJECT_NAME} PRIVATE
+ 	src
++	${CMAKE_CURRENT_SOURCE_DIR}/../fakeroot/include
+ 	${SIGCXX_INCLUDE_DIRS}
+ 	${PIXMAN_INCLUDE_DIRS}
+-	${PHYSFS_INCLUDE_DIRS}
+ 	${SDL2_INCLUDE_DIRS} # Blindly assume other SDL bits are in same directory
+ 	${Boost_INCLUDE_DIR}
+ 	${MRI_INCLUDE_DIRS}
+@@ -424,7 +425,7 @@
+ 	${SDL2_IMAGE_LIBRARIES}
+ 	${SDL2_TTF_LIBRARIES}
+ 	${SDL2_SOUND_LIBRARIES}
+-	${PHYSFS_LIBRARIES}
++	physfs_static
+ 	${PIXMAN_LIBRARIES}
+ 	${Boost_LIBRARIES}
+ 	${MRI_LIBRARIES}
