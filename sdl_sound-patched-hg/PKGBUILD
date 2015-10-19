@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 # Contributor: Tom Newsom <Jeepster@gmx.co.uk>
 
-pkgname=sdl_sound-patched-hg
+pkgname=sdl_sound-patched-hg-fix
 pkgver=1.0.3.r48.719dade41745
 pkgrel=1
 pkgdesc="A library to decode several popular sound file formats, patched for SDL2, pkg-config and ima-adpcm support (development version)"
@@ -11,8 +11,8 @@ url="http://icculus.org/SDL_sound/"
 license=('LGPL')
 depends=('sdl2' 'libmodplug' 'libvorbis' 'flac' 'speex')
 makedepends=('mercurial')
-conflicts=("sdl_sound-hg") #"sdl_sound" 
-provides=("sdl_sound-hg")
+conflicts=("sdl_sound-patched-hg" "sdl2_sound") #"sdl_sound" 
+provides=("sdl_sound-patched-hg" "sdl2_sound")
 source=(${pkgname%%-*}::"hg+http://hg.icculus.org/icculus/SDL_sound"
         "${pkgname%%-*}-change_libname.patch"
         "${pkgname%%-*}-pkgconfig.patch"

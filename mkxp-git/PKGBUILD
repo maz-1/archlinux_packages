@@ -7,7 +7,7 @@ pkgdesc="Open source implementation of the Ruby Game Scripting System of RPG Mak
 arch=('i686' 'x86_64')
 url="https://github.com/Ancurio/mkxp"
 license=('GPL2')
-depends=('ruby' 'sdl2' 'sdl2_image' 'sdl2_ttf' 'sdl_sound-patched-hg'
+depends=('ruby' 'sdl2' 'sdl2_image' 'sdl2_ttf' 'sdl_sound-patched-hg-fix'
          'pixman' 'openal' 'boost-libs' 'libgl' 'libsigc++' 'fluidsynth') # 'physfs-hg'
 makedepends=('git' 'boost' 'cmake' 'mesa' 'vim')
 conflicts=('mkxp')
