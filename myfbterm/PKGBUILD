@@ -12,11 +12,10 @@ provides=('fbterm')
 conflicts=('fbterm')
 optdepends=('libx86: for VESA video card support')
 install=myfbterm.install
-
+source=("git+https://github.com/maz-1/myfbterm.git")
+md5sums=('SKIP')
 build() {
-  svn co http://${pkgname}.googlecode.com/svn/trunk ${pkgname}
   cd "${srcdir}/${pkgname}"
-
   ./configure --prefix=/usr
   make
 }
