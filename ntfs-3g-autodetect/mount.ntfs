@@ -1,0 +1,10 @@
+#!/bin/sh
+if (cat /proc/filesystems | grep ufsd) ; then
+	mount -i -t ufsd "$@"
+else
+	if [ -f /usr/bin/ntfs-3g ] ; then
+		ntfs-3g "$@"
+	else
+		mount -t ntfs "$@"
+	fi
+fi
