@@ -1,27 +1,23 @@
 # Maintainer: carstene1ns <arch carsten-teibes de> - http://git.io/ctPKG
 
-pkgname=mkxp
-pkgver=r775.7bf6eca
+pkgname=mkxp-git
+pkgver=r813.ae59fcd
 pkgrel=1
 pkgdesc="Open source implementation of the Ruby Game Scripting System of RPG Maker XP/VX/VX Ace (development version)"
 arch=('i686' 'x86_64')
 url="https://github.com/Ancurio/mkxp"
 license=('GPL2')
 depends=('ruby' 'sdl2' 'sdl2_image' 'sdl2_ttf' 'sdl_sound-patched-hg-fix'
-         'pixman' 'openal' 'boost-libs' 'libgl' 'libsigc++' 'fluidsynth') # 'physfs-hg'
+         'pixman' 'openal' 'boost-libs' 'libgl' 'libsigc++' 'fluidsynth' 'physfs')
 makedepends=('git' 'boost' 'cmake' 'mesa' 'vim')
 conflicts=('mkxp')
 provides=('mkxp')
 install=mkxp.install
-source=("git+$url.git" "add_cxx11_flag.patch" "fix_library_name.patch" "LiberationSans.ttf"
-        "static_link.patch"
-        "mkxp-physfs::hg+http://hg.icculus.org/icculus/physfs")
+source=("git+$url.git" "add_cxx11_flag.patch" "fix_library_name.patch" "LiberationSans.ttf")
 md5sums=('SKIP'
          '244d09e7ea9c681e884fe40bb8632724'
          '9e23aea0ac72dc352d8cb9fe9df8f499'
-         '0d4e2660a06d6b185cb9a26e3c54d330'
-         'SKIP'
-         'SKIP')
+         '0d4e2660a06d6b185cb9a26e3c54d330')
 
 pkgver() {
   cd mkxp
@@ -31,17 +27,11 @@ prepare() {
     cd mkxp
     patch -p1 < ../add_cxx11_flag.patch
     patch -p1 < ../fix_library_name.patch
-    patch -p1 < ../static_link.patch
     rm assets/liberation.ttf
     cp "$srcdir/LiberationSans.ttf" "$srcdir/mkxp/assets/liberation.ttf"
 }
 
 build() {
-  cd "${srcdir}/mkxp-physfs"
-  cmake ./ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${srcdir}/fakeroot" \
-    -DPHYSFS_BUILD_TEST=ON  -DSDL_STATIC=ON -DSDL_SHARED=OFF 
-  make -j4
-  make install
   
   cd "${srcdir}/mkxp"
 
@@ -51,7 +41,7 @@ build() {
   [ -z $_rubyver ] && exit 1
 
   cmake ./ -DMRIVERSION=$_rubyver -DWORKDIR_CURRENT=ON -DSHARED_FLUID=ON
-  make VERBOSE=1 -j4
+  make
 }
 
 package() {
