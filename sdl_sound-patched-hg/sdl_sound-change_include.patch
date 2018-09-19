@@ -1,0 +1,43 @@
+diff -Naur orig/CMakeLists.txt sdl_sound/CMakeLists.txt
+--- orig/CMakeLists.txt	2018-09-19 22:43:15.000000000 +0800
++++ sdl_sound/CMakeLists.txt	2018-09-19 22:57:58.248732384 +0800
+@@ -28,6 +28,7 @@
+ endif()
+ 
+ find_package(SDL2 REQUIRED)
++get_target_property(SDL2_INCLUDE_DIRS SDL2::SDL2 INTERFACE_INCLUDE_DIRECTORIES)
+ include_directories(${SDL2_INCLUDE_DIRS})
+ 
+ 
+@@ -137,7 +138,7 @@
+     set_target_properties(SDL2_sound PROPERTIES MACOSX_RPATH 1)
+     set_target_properties(SDL2_sound PROPERTIES VERSION ${SDLSOUND_VERSION})
+     set_target_properties(SDL2_sound PROPERTIES SOVERSION ${SDLSOUND_SOVERSION})
+-    target_link_libraries(SDL2_sound ${SDL2_LIBRARIES} ${OPTIONAL_LIBRARY_LIBS} ${OTHER_LDFLAGS})
++    target_link_libraries(SDL2_sound SDL2::SDL2 ${OPTIONAL_LIBRARY_LIBS} ${OTHER_LDFLAGS})
+     set(SDLSOUND_LIB_TARGET SDL2_sound)
+     set(SDLSOUND_INSTALL_TARGETS ${SDLSOUND_INSTALL_TARGETS} ";SDL2_sound")
+ endif()
+@@ -162,8 +163,8 @@
+     target_link_libraries(playsound_simple ${SDLSOUND_LIB_TARGET} ${OTHER_LDFLAGS})
+     #set(SDLSOUND_INSTALL_TARGETS ${SDLSOUND_INSTALL_TARGETS} ";playsound_simple")
+     if(NOT SDLSOUND_BUILD_SHARED)
+-        target_link_libraries(playsound ${SDL2_LIBRARIES} ${OPTIONAL_LIBRARY_LIBS} ${OTHER_LDFLAGS})
+-        target_link_libraries(playsound_simple ${SDL2_LIBRARIES} ${OPTIONAL_LIBRARY_LIBS} ${OTHER_LDFLAGS})
++        target_link_libraries(playsound SDL2::SDL2 ${OPTIONAL_LIBRARY_LIBS} ${OTHER_LDFLAGS})
++        target_link_libraries(playsound_simple SDL2::SDL2 ${OPTIONAL_LIBRARY_LIBS} ${OTHER_LDFLAGS})
+     endif()
+ endif()
+ 
+diff -Naur orig/CMakeLists.txt sdl_sound/CMakeLists.txt
+--- orig/CMakeLists.txt	2018-09-19 23:03:07.000000000 +0800
++++ sdl_sound/CMakeLists.txt	2018-09-19 23:06:04.503447279 +0800
+@@ -172,7 +172,7 @@
+         RUNTIME DESTINATION bin
+         LIBRARY DESTINATION lib${LIB_SUFFIX}
+         ARCHIVE DESTINATION lib${LIB_SUFFIX})
+-install(FILES SDL_sound.h DESTINATION include)
++install(FILES src/SDL_sound.h DESTINATION include/SDL2)
+ 
+ find_package(Doxygen)
+ if(DOXYGEN_FOUND)

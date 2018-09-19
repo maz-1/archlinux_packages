@@ -1,6 +1,6 @@
-diff -r 719dade41745 decoders/wav.c
---- a/decoders/wav.c	Wed Aug 15 23:52:18 2012 -0400
-+++ b/decoders/wav.c	Fri Sep 12 06:50:35 2014 +0200
+diff -r 719dade41745 src/sdl_sound/src/SDL_sound_wav.c
+--- a/src/SDL_sound_wav.c	Wed Aug 15 23:52:18 2012 -0400
++++ b/src/SDL_sound_wav.c	Fri Sep 12 06:50:35 2014 +0200
 @@ -113,8 +113,9 @@
  
  #define fmtID  0x20746D66  /* "fmt ", in ascii. */
