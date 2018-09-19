@@ -1,0 +1,12 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: SDL2_sound
+Description: A library to decode several popular sound file formats, such as .WAV and .MP3
+Version: __VERSION__
+Requires: sdl2 >= 2.0.0
+Libs: -L${libdir} -lSDL2_sound
+Cflags: -I${includedir}/SDL2
+

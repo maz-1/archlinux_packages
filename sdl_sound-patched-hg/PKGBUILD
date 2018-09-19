@@ -15,10 +15,12 @@ conflicts=("sdl_sound-patched-hg" "sdl2_sound") #"sdl_sound"
 provides=("sdl_sound-patched-hg" "sdl2_sound")
 source=(${pkgname%%-*}::"hg+http://hg.icculus.org/icculus/SDL_sound"
         "${pkgname%%-*}-ima-adpcm.patch"
-        "${pkgname%%-*}-change_include.patch")
+        "${pkgname%%-*}-change_include.patch"
+        "SDL2_sound.pc")
 md5sums=('SKIP'
             'bb94c13e440483f29064ad631283c754'
-            'fdecbb663db7d10f2b06ef2429f8ace9')
+            'fdecbb663db7d10f2b06ef2429f8ace9'
+            '4e433a5b1beab2861e15350fb1ec9b2f')
 
 pkgver() {
   cd ${pkgname%%-*}
@@ -47,5 +49,8 @@ build() {
 
 package() {
   make -C "${srcdir}/build" DESTDIR="$pkgdir/" install
-  rm -r "${pkgdir}/usr/bin" 
+  rm -r "${pkgdir}/usr/bin"
+  install -Dm644 "${srcdir}/SDL2_sound.pc" "${pkgdir}/usr/lib/pkgconfig/SDL2_sound.pc"
+  _lasttag=$(cd "${srcdir}/${pkgname%%-*}";hg tags -q | sort -r | grep release- | head -n1)
+  sed -i "s/__VERSION__/${_lasttag/release-}/g" "${pkgdir}/usr/lib/pkgconfig/SDL2_sound.pc"
 }
