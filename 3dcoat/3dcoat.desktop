@@ -1,0 +1,12 @@
+[Desktop Entry]
+Exec=/usr/bin/3dcoat
+GenericName[zh_CN]=3DCoat - Voxel sculpting, Retopology, UV-mapping, Texture painting
+GenericName=3DCoat数字雕刻软件
+Icon=3dcoat.png
+Name[zh_CN]=3DCoat
+Name=3DCoat
+StartupNotify=true
+Terminal=false
+Type=Application
+Categories=Graphics;3DGraphics;
+X-KDE-SubstituteUID=false

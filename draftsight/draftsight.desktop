@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=DraftSight
+Comment=Freeware CAD software for your DWG/DXF files.
+Path=/opt/dassault-systemes/DraftSight/Linux
+#Exec=env LD_PRELOAD=/usr/lib/libfreetype.so --unset=XDG_CURRENT_DESKTOP --unset=DESKTOP_SESSION --unset=GNOME_DESKTOP_SESSION_ID vblank_mode=0 faketime '2020-02-29 08:15:42' /opt/dassault-systemes/DraftSight/Linux/DraftSight %U
+Exec=/usr/bin/draftsight %U
+Icon=draftsight
+Terminal=false
+Categories=Graphics;2DGraphics;

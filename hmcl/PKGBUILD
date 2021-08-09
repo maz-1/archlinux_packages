@@ -1,28 +1,31 @@
 pkgname=hmcl
-pkgver=2.3.5.4
+pkgver=3.3.195
 pkgrel=1
 pkgdesc="Hello Minecraft Launcher"
 arch=('any')
 url="http://jpcsp.org/"
 license=('GPL')
-depends=(java-runtime)
+depends=('java11-openjfx' 'jre11-openjdk' 'mesa-demos')
 source=(
-    'HMCL-2.3.5.4.jar'
+    "HMCL-${pkgver}.jar"
     'hmcl.sh'
     'hmcl.desktop'
     'minecraft.png'
+    'background.png'
 )
 
 md5sums=('SKIP'
+         'SKIP'
          'SKIP'
          'SKIP'
          'SKIP')
 
 
 package() {
-  install -Dm 755 "${srcdir}/HMCL-2.3.5.4.jar" "$pkgdir/opt/hmcl/hmcl.jar"
+  install -Dm 755 "${srcdir}/HMCL-${pkgver}.jar" "$pkgdir/opt/hmcl/hmcl.jar"
   install -Dm 755 "${srcdir}/hmcl.sh" "$pkgdir/usr/bin/hmcl"
   install -Dm 755 "${srcdir}/hmcl.desktop" "$pkgdir/usr/share/applications/hmcl.desktop"
   install -Dm 755 "${srcdir}/minecraft.png" "$pkgdir/usr/share/icons/minecraft.png"
+  install -Dm 755 "${srcdir}/background.png" "$pkgdir/opt/hmcl/background.png"
 }
 

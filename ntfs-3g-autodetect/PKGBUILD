@@ -1,20 +1,18 @@
 pkgname=ntfs-3g-autodetect
-pkgver=2016.2.22
+pkgver=2017.3.23
 pkgrel=1
 pkgdesc="NTFS filesystem driver and utilities"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.tuxera.com/community/open-source-ntfs-3g/"
 depends=( 'fuse' 'util-linux')
 makedepends=( 'rsync')
 conflicts=( 'ntfs-3g' 'ntfsprogs')
 provides=( 'ntfs-3g' 'ntfsprogs')
 license=('GPL2')
-source_x86_64=("ntfs-3g-x86_64.pkg.tar.xz::https://www.archlinux.org/packages/extra/x86_64/ntfs-3g/download/#ntfs-3g-x86_64.pkg.tar.xz")
+source_x86_64=("ntfs-3g-x86_64.pkg.tar.xz::https://www.archlinux.org/packages/extra/x86_64/ntfs-3g/download/#ntfs-3g-x86_64.pkg.tar.zst")
 md5sums_x86_64=('SKIP')
-source_i686=("ntfs-3g-i686.pkg.tar.xz::https://www.archlinux.org/packages/extra/i686/ntfs-3g/download/#ntfs-3g-i686.pkg.tar.xz")
-md5sums_i686=('SKIP')
 source=("mount.ntfs")
-md5sums=('516aa16db9a499ada563e2aaa69a70c9')
+md5sums=('244e81eb37878a958e4a7c87aa63b8ab')
 options=('!strip')
 
 pkgver() {

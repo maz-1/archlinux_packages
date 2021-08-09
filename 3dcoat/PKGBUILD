@@ -1,0 +1,33 @@
+pkgname=3dcoat
+_pkgver_major=2021
+_pkgver_minor=21
+pkgver=${_pkgver_major}.${_pkgver_minor}
+_pkgdir="3DCoat-${pkgver}"
+pkgrel=1
+pkgdesc="3dcoat"
+arch=('x86_64')
+url="http://3d-coat.com"
+license=('custom')
+depends=('libgl')
+optdepends=('opencl-driver')
+makedepends=('sed')
+#install=${pkgname}.install
+source=("${_pkgdir}.tar.bz2" "3dcoat.desktop")
+md5sums=('SKIP' 'SKIP')
+options=('!strip') # Do not strip binaries because it breaks them down
+
+package() {
+  # Prepare the directory skeleton needed for install.sh
+  install -dm 755 "${pkgdir}/opt"
+  install -dm 755 "${pkgdir}/usr/share/"{applications,icons}
+  install -dm 755 "${pkgdir}/usr/bin"
+  cp -r "${srcdir}/${_pkgdir}" "${pkgdir}/opt/3dcoat"
+  install -Dm644 "${srcdir}/3dcoat.desktop" "${pkgdir}/usr/share/applications/3dcoat.desktop"
+  install -Dm644 "${srcdir}/${_pkgdir}/data/Icon/3DCoat.png" "${pkgdir}/usr/share/icons/3dcoat.png"
+  echo '#!/bin/sh
+rm -f ~/.vipmstats/uninst_*.log ~/.CrashReport/uninst_*.log ~/.cache/uninst_*.log ~/Pictures/.cache/uninst_*.log ~/Videos/.cache/uninst_*.log
+rm -f ~/3DCoat-2021/data/Temp/tp_2021.dat ~/Documents/3DCoat-2021/data/Temp/tp_2021.dat
+cd /opt/3dcoat/
+exec /opt/3dcoat/3dcoat "$@"' > "${pkgdir}/usr/bin/3dcoat"
+  chmod +x "${pkgdir}/usr/bin/3dcoat"
+}

@@ -1,0 +1,12 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2b05b05..c79617e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -217,6 +217,7 @@ include_directories(${SDL2_INCLUDE_DIRS})
+
+ list(APPEND KRKRSDL2_LIBS
+ 	${SDL2_LIBRARIES}
++	pthread
+ )
+ endif()
+

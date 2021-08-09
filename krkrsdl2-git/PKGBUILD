@@ -1,0 +1,44 @@
+#Maintainer: fuzzbop <fuzzbop@gmail.com>
+
+pkgname=krkrsdl2-git
+pkgver=20210813.g473defe
+pkgrel=1
+pkgdesc="SDL2 port of kirikiri"
+arch=('i686' 'x86_64')
+url="https://github.com/krkrsdl2/krkrsdl2"
+license=('GPL2')
+depends=('sdl2')
+makedepends=('git' 'cmake')
+conflicts=('krkrsdl2')
+provides=('krkrsdl2')
+source=("git+$url.git"
+        'pthread.patch')
+md5sums=('SKIP'
+         '8e2e904a2ca6173289282acb08e7f140')
+
+
+pkgver() {
+  # Update version
+  cd "${pkgname::-4}"
+  echo "$(git show -s --format="%ci"|grep -oP '\d{4}-\d{2}-\d{2}'|sed 's:-::g').g$(git describe --always)"
+}
+
+prepare() {
+  # Init submodule(s)
+  cd "${srcdir}/${pkgname::-4}"
+  patch -p1 < "${srcdir}/pthread.patch"
+  git submodule update --init --recursive
+}
+
+build() {
+    mkdir -p "${srcdir}/build"
+    cd "${srcdir}/build"
+    cmake -DCMAKE_INSTALL_PREFIX="/usr" \
+          -DLINUX=1 \
+        "../${pkgname::-4}"
+    make
+}
+
+package() {
+    install -Dm755 "${srcdir}/build/${pkgname::-4}" "${pkgdir}/usr/bin/${pkgname::-4}"
+}
