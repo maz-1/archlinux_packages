@@ -1,5 +1,5 @@
 pkgname=ntfs-3g-autodetect
-pkgver=2017.3.23
+pkgver=2022.5.17
 pkgrel=1
 pkgdesc="NTFS filesystem driver and utilities"
 arch=('x86_64')

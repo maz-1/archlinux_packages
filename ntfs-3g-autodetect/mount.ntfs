@@ -1,6 +1,7 @@
 #!/bin/sh
 if (cat /proc/filesystems | grep ntfs3) ; then
-	mount -i -t ntfs3 "$@"
+	PARAMS="$@"
+	mount -i -t ntfs3 ${PARAMS//,windows_names/}
 else
 	if [ -f /usr/bin/ntfs-3g ] ; then
 		ntfs-3g "$@"
